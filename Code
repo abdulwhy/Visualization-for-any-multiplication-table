@@ -1,0 +1,46 @@
+# Must have matplotlib and plotly installed
+
+import matplotlib.pyplot as plt
+from plotly.graph_objs import Bar,Layout
+from plotly import offline
+
+
+number = (input("Enter a number:  "))
+answer = True
+
+try:
+    number = int(number)
+except ValueError:
+    print("Please enter a whole number.")
+    answer = False  
+
+answers = []
+values=[]
+
+if answer == True:
+    for value in range(1,11):
+        answer = number * value
+        values.append(value)
+        answers.append(answer)
+
+
+
+
+fig,ax = plt.subplots()
+ax.scatter(values,answers,s=3)
+plt.style.use('seaborn')
+ax.set_title(f"Table of {number} ",fontsize=24)
+ax.set_ylabel("numbers",fontsize=14)
+ax.set_xlabel("bla",fontsize=14)
+ax.tick_params(axis="both",which='major',labelsize=14)
+ax.axis([0,10,0,number*10])
+plt.show()
+
+
+data = [Bar(x=x_values,y=y_values)]
+
+x_axis_config = {'title':'Result'}
+y_axis_config = {'title':'Number'}
+my_layout = Layout(title=f'Table of {number}',
+            xaxis=x_axis_config,yaxis=y_axis_config)
+offline.plot({'data':data, 'layout':my_layout},filename='table.html')  
